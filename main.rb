@@ -48,9 +48,12 @@ post '/create_blog' do
 end
 
 get '/blogs' do 
-	@user = User.find(session[:user_id])
+	if @user = User.find(session[:user_id])
 	@blogs = Blog.all 
 	erb :show
+else
+	redirect '/'
+end
 end
 
 get '/sign-out' do
@@ -61,6 +64,13 @@ end
 get '/profile' do
 	 @user = User.find(session[:user_id])
 	 erb :index
+end
+
+get '/destroy' do
+	 @user = User.destroy(session[:user_id])
+	redirect '/'
+	erb :home
+
 end
 
 # get '/' do 
